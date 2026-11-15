@@ -1,0 +1,1 @@
+<?php $_GET['v']='gifts'; include __DIR__.'/products.php'; ?>

@@ -1,0 +1,4 @@
+<?php require_once __DIR__.'/data.php'; require_once __DIR__.'/navbar.php'; $page=$page??'index'; ?>
+<!doctype html><html lang="ta"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title><?=h($shop)?></title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@500;600;700;800&family=Cinzel+Decorative:wght@700&family=Noto+Sans+Tamil:wght@400;600;800&family=Noto+Serif+Tamil:wght@600;800;900&family=Poppins:wght@500&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/user.css"></head><body>
+<?php if(empty($nonav))echo an_navbar($page); ?>

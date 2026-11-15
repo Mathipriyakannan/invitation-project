@@ -1,0 +1,59 @@
+/* ===== View Book (flipbook) - opened from the "View Book" button under "தொடர்பு கொள்ளுங்கள்" on products.php ===== */
+.fb{position:fixed;inset:0;z-index:95;display:none;flex-direction:column;background:radial-gradient(ellipse at 50% 40%,#5a0a30 0,#2c0517 70%,#1d030f 100%);color:#fff;font-family:'Noto Sans Tamil',sans-serif;overflow:hidden;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.fb.on{display:flex}
+.fb-top{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px clamp(14px,3vw,34px);border-bottom:1px solid rgba(243,217,149,.35)}
+.fb-ttl{min-width:0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.fb-ttl b{font:800 clamp(15px,2.4vw,20px)/1.3 'Noto Serif Tamil',serif;color:#F3D995;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+.fb-ttl span{display:inline-flex;align-items:center;height:26px;padding:0 12px;border-radius:20px;border:1.5px dashed #E2B44F;color:#F3D995;font:700 12px 'Noto Sans Tamil',sans-serif;letter-spacing:.05em;white-space:nowrap}
+.fb-ttl span:empty{display:none}
+.fb-x{flex:none;width:40px;height:40px;border-radius:50%;border:2px solid #fff;background:#89194E;color:#fff;font-size:16px;cursor:pointer;padding:0}
+.fb-x:hover{background:#a3185f}
+.fb-stage{position:relative;flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px 0}
+.fb-sl{transition:transform .9s cubic-bezier(.45,.05,.25,1);will-change:transform}
+.fb-bk{position:relative;perspective:2600px;filter:drop-shadow(0 22px 34px rgba(0,0,0,.55))}
+/* a sheet = 2 faces (front + back); it turns around the spine (its left edge) */
+.fb-sh{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.45,.05,.25,1)}
+.fb-sh.fl{transform:rotateY(-180deg)}
+.fb-f{position:absolute;inset:0;overflow:hidden;background:#fdf6e6;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fb-f.b{transform:rotateY(180deg)}
+.fb-f::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,.08) 5%,transparent 14%)}
+.fb-f.b::after{background:linear-gradient(270deg,rgba(0,0,0,.34),rgba(0,0,0,.08) 5%,transparent 14%)}
+.fb-f:not(.b){border-radius:0 6px 6px 0}.fb-f.b{border-radius:6px 0 0 6px}
+/* page contents */
+.fb-pg{position:absolute;inset:0;container-type:inline-size;background:#fdf6e6}
+.fb-pg img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
+.fb-tx{display:flex;flex-direction:column;align-items:center;text-align:center;padding:9cqw 8cqw;background:linear-gradient(180deg,#fffaf0,#f8ecd6);overflow:hidden}
+.fb-tx::before{content:"";position:absolute;inset:3.2cqw;border:1.5px solid #c9a56b;border-radius:6px;pointer-events:none}
+.fb-tx small{display:block;margin:0 0 2.4cqw;color:#a3185f;font:800 clamp(10px,3.2cqw,14px)/1.3 'Noto Sans Tamil',sans-serif;letter-spacing:.14em}
+.fb-dv{display:flex;align-items:center;gap:8px;width:46%;margin:1.6cqw auto 3cqw;flex:none}
+.fb-dv::before,.fb-dv::after{content:"";flex:1;height:1.5px}.fb-dv::before{background:linear-gradient(90deg,transparent,#c9a56b)}.fb-dv::after{background:linear-gradient(90deg,#c9a56b,transparent)}
+.fb-dv i{flex:none;width:7px;height:7px;transform:rotate(45deg);background:linear-gradient(135deg,#a3185f,#6b0b3e);box-shadow:0 0 0 1.5px #c9a56b}
+.fb-tx h3{margin:0;color:#6b1236;font:800 clamp(18px,7.4cqw,34px)/1.35 'Noto Serif Tamil',serif;overflow-wrap:anywhere}
+.fb-tx h4{margin:2.4cqw 0 0;color:#6b5a24;font:700 clamp(13px,4.6cqw,20px)/1.5 'Noto Sans Tamil',sans-serif;overflow-wrap:anywhere}
+.fb-ct{margin:3.4cqw 0 0;width:100%;flex:1 1 auto;min-height:0;overflow-y:auto;color:#3b1224;font:500 clamp(12px,4cqw,17px)/1.75 'Noto Sans Tamil',sans-serif;white-space:pre-line;overflow-wrap:anywhere;scrollbar-width:thin;scrollbar-color:#c9a56b transparent;user-select:text;-webkit-user-select:text}
+/* brand page (back cover) */
+.fb-br{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2.2cqw;background:radial-gradient(ellipse at 50% 30%,rgba(255,150,120,.18),transparent 70%),#52011F}
+.fb-br::before{content:"";position:absolute;inset:3.2cqw;border:1.5px solid #E2B44F;border-radius:6px;pointer-events:none}
+.fb-br i{font-style:normal;color:#F3D995;font-size:clamp(26px,12cqw,56px);line-height:1}
+.fb-br b{color:#F3D995;font:800 clamp(18px,8cqw,34px)/1.35 'Noto Serif Tamil',serif}
+.fb-br em{font:700 clamp(9px,3.4cqw,14px) 'Cinzel','Cormorant Garamond',Georgia,serif;font-style:normal;letter-spacing:.24em;color:#fbeed0}
+.fb-br .fb-dv{width:40%;margin:1cqw auto}
+/* arrows */
+.fb-nv{position:absolute;top:50%;transform:translateY(-50%);z-index:5;display:grid;place-items:center;width:50px;height:50px;padding:0;border-radius:50%;border:2px solid #E2B44F;background:linear-gradient(135deg,#9a1a5c,#6b0b3e);color:#F3D995;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.45);transition:.2s}
+.fb-nv.prev{left:clamp(8px,2vw,28px)}.fb-nv.next{right:clamp(8px,2vw,28px)}
+.fb-nv:hover{transform:translateY(-50%) scale(1.08);filter:brightness(1.15)}
+.fb-nv[disabled]{opacity:.28;cursor:default;pointer-events:none}
+.fb-bot{flex:none;display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 14px 14px;color:#F3D995;font:700 14px 'Noto Sans Tamil',sans-serif;letter-spacing:.04em}
+.fb-bot small{color:#e9d3b3;font:500 12px 'Noto Sans Tamil',sans-serif}
+/* single-page mode (mobile): the turned page folds away to the left and is hidden */
+.fb-sh.one{left:0;width:100%;transition:transform .8s cubic-bezier(.45,.05,.25,1),visibility 0s}
+.fb-sh.one.fl{visibility:hidden;transition:transform .8s cubic-bezier(.45,.05,.25,1),visibility 0s linear .8s}
+.fb-sh.one .fb-f{border-radius:6px}
+.fb-sh.one .fb-f::after{background:linear-gradient(90deg,rgba(0,0,0,.26),transparent 8%)}
+@media(max-width:820px){
+ .fb-nv{width:42px;height:42px;top:auto;bottom:6px;transform:none}.fb-nv:hover{transform:scale(1.06)}
+ .fb-nv.prev{left:14px}.fb-nv.next{right:14px}
+ .fb-bot{padding:8px 66px 16px;min-height:34px}
+ .fb-ttl b{max-width:52vw}
+}
+@media(prefers-reduced-motion:reduce){.fb-sh,.fb-sl{transition-duration:.01s!important}}

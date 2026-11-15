@@ -1,0 +1,100 @@
+/* ===== புக்லெட் (flipbook) — முகப்பு கார்டுகளை கிளிக் செய்தால் திறக்கும் ===== */
+.bk{position:fixed;inset:0;z-index:100000;display:none;align-items:center;justify-content:center;flex-direction:column;padding:12px;
+ background:#fde8c0 url(img/booklet-bg.jpg) center 80%/cover no-repeat;font-family:'Baloo Thambi 2','Mukta Malar','Noto Sans Tamil',sans-serif}
+.bk.on{display:flex;animation:bkIn .35s ease both}
+@keyframes bkIn{from{opacity:0}to{opacity:1}}
+.bk *{box-sizing:border-box}
+.bk-x{position:absolute;top:14px;right:14px;z-index:5;width:44px;height:44px;border-radius:50%;border:2px solid #e3c27a;background:linear-gradient(#a3185f,#6a0d3f);color:#fff;font-size:18px;cursor:pointer;box-shadow:0 6px 14px rgba(110,13,63,.3)}
+.bk-ttl{text-align:center;margin:0 0 10px;color:#a3185f;line-height:1.2}
+.bk-ttl small{display:block;font:600 11px 'Cinzel',serif;letter-spacing:.3em;color:#b98d3e}
+.bk-ttl b{display:block;font-weight:800;font-size:clamp(20px,3.2vw,30px);color:#8f1456}
+.bk-stage{position:relative;display:flex;align-items:center;justify-content:center;gap:clamp(6px,2vw,22px);width:100%}
+.bk-nv{flex:none;width:52px;height:52px;border-radius:50%;border:2px solid #e3c27a;background:linear-gradient(#b21d68,#6a0d3f);color:#fff;font-size:26px;line-height:1;cursor:pointer;box-shadow:0 8px 18px rgba(110,13,63,.3);transition:.2s;display:grid;place-items:center;padding:0}
+.bk-nv:hover{filter:brightness(1.2);transform:scale(1.08)}
+.bk-nv[disabled]{opacity:.28;pointer-events:none}
+.bk-book{position:relative;display:flex;aspect-ratio:3/2;width:min(88vw,calc(70vh*1.5),960px);perspective:2200px;filter:drop-shadow(0 22px 28px rgba(110,13,67,.28))}
+.bk-L,.bk-R{position:relative;width:50%;height:100%;overflow:hidden;background:linear-gradient(#fffaf0,#f8ecd0)}
+.bk-L{border-radius:10px 0 0 10px;border:1.5px solid #d6b878;border-right:0;box-shadow:inset -22px 0 26px -18px rgba(90,50,10,.35),-1px 2px 0 #efe3c3,-2px 4px 0 #e2d2a6,-3px 6px 0 #efe3c3,-4px 8px 0 #d9c58f}
+.bk-R{border-radius:0 10px 10px 0;border:1.5px solid #d6b878;border-left:0;box-shadow:inset 22px 0 26px -18px rgba(90,50,10,.35),1px 2px 0 #efe3c3,2px 4px 0 #e2d2a6,3px 6px 0 #efe3c3,4px 8px 0 #d9c58f}
+.bk-book::after{content:"";position:absolute;left:4%;right:4%;bottom:-26px;height:22px;z-index:-1;background:radial-gradient(ellipse at 50% 50%,rgba(80,20,50,.28),transparent 70%);filter:blur(3px);pointer-events:none}
+.bk-spine::after{content:"";position:absolute;top:-2px;left:7px;width:15px;height:15%;min-height:34px;background:linear-gradient(90deg,#a3185f,#6a0d3f);clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%);filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.bk-spine{position:absolute;left:50%;top:0;bottom:0;width:3px;margin-left:-1.5px;background:linear-gradient(#c9a56b,#8a6538);z-index:4;pointer-events:none}
+.bk-leaf{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;z-index:3;display:none}
+.bk-leaf .f,.bk-leaf .b{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:linear-gradient(#fffaf0,#f8ecd0);border:1.5px solid #d6b878}
+.bk-leaf .f{border-left:0;border-radius:0 10px 10px 0}
+.bk-leaf .f::after,.bk-leaf .b::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0}
+.bk-leaf .f::after{background:linear-gradient(90deg,rgba(60,30,10,.05),rgba(60,30,10,.5))}
+.bk-leaf .b::after{background:linear-gradient(270deg,rgba(60,30,10,.05),rgba(60,30,10,.5))}
+.bk-leaf.go .f::after{animation:bkShF .88s ease-in both}
+.bk-leaf.go .b::after{animation:bkShB .88s ease-out both}
+@keyframes bkShF{0%{opacity:0}50%{opacity:.85}100%{opacity:.85}}
+@keyframes bkShB{0%{opacity:.85}50%{opacity:.85}100%{opacity:0}}
+.bk-leaf .b{transform:rotateY(180deg);border-right:0;border-radius:10px 0 0 10px}
+/* வலது பக்கம்: இன்விடேஷன் படம் */
+.bk-pr{position:absolute;inset:0;padding:3.5%;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,#fffdf6,#f6e8c8)}
+.bk-pr .fr{position:relative;width:100%;height:100%;display:grid;place-items:center;border:2px solid #d6b878;border-radius:8px;padding:0;overflow:hidden;background:#fffdf8;box-shadow:0 6px 14px rgba(110,13,63,.18)}
+.bk-pr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:6px}
+/* படம் இல்லையென்றால் தானாக வரும் டிசைன் கார்டு */
+.bk-fb{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff4d2;border-radius:4px;padding:8%;overflow:hidden;
+ background:radial-gradient(circle at 50% 0,rgba(255,255,255,.22),transparent 55%),linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 8px 18px rgba(60,35,10,.3)}
+.bk-fb::before{content:"";position:absolute;inset:3.5%;border:1.5px solid rgba(243,217,149,.85);border-radius:4px;pointer-events:none}
+.bk-fb::after{content:"";position:absolute;inset:6%;border:1px dashed rgba(243,217,149,.5);border-radius:3px;pointer-events:none}
+.bk-fb i{font-style:normal;font-size:clamp(30px,6vw,56px);line-height:1}
+.bk-fb em{font:600 10px 'Cinzel',serif;font-style:normal;letter-spacing:.3em;color:#f3d995;margin:8px 0 2px}
+.bk-fb b{font-weight:800;font-size:clamp(17px,2.6vw,28px);line-height:1.3;color:#fff8e6;text-shadow:0 2px 4px rgba(0,0,0,.35)}
+.bk-fb s{display:block;text-decoration:none;width:46%;height:2px;margin:10px auto;background:linear-gradient(90deg,transparent,#f3d995,transparent)}
+.bk-fb span{font-weight:600;font-size:clamp(11px,1.5vw,15px);line-height:1.5;color:#fbeed0;max-width:88%}
+/* இடது பக்கம்: மேலே முன்பக்கம்/பின்பக்கம் டிசைன், கீழே 4 வார்த்தை */
+.bk-pl{position:absolute;inset:0;display:flex;flex-direction:column;padding:5%;background:radial-gradient(circle at 50% 0,#fffdf6,#f8ecd0)}
+.bk-pl::before{content:"";position:absolute;inset:3.5%;border:1.5px solid #d6b878;border-radius:8px;pointer-events:none}
+.bk-pv{flex:1.25;min-height:0;display:flex;align-items:center;justify-content:center;gap:6%;padding:3% 4% 1%}
+.bk-mc{position:relative;height:100%;aspect-ratio:3/4;max-width:46%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:6px;color:#fff4d2;
+ background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 8px 14px rgba(60,35,10,.35),inset 0 0 0 2px rgba(243,217,149,.85);overflow:hidden}
+.bk-mc:nth-child(1){transform:rotate(-4deg)}.bk-mc:nth-child(2){transform:rotate(4deg)}
+.bk-mc::after{content:"";position:absolute;inset:5px;border:1px dashed rgba(243,217,149,.55);border-radius:4px}
+.bk-mc i{font-style:normal;font-size:clamp(20px,3.4vw,34px)}
+.bk-mc b{font-weight:800;font-size:clamp(11px,1.6vw,17px);line-height:1.25;margin-top:4px;padding:0 6px}
+.bk-mc small{position:absolute;bottom:7px;left:0;right:0;font:700 clamp(8px,1vw,10px) 'Mukta Malar',sans-serif;color:#f3d995;letter-spacing:.06em}
+.bk-mc.bkb i{font-size:clamp(18px,2.8vw,28px)}
+.bk-mc.bkb b{font:600 clamp(8px,1vw,11px) 'Cinzel',serif;letter-spacing:.2em;color:#f3d995}
+.bk-wd{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 6%}
+.bk-dv{display:flex;align-items:center;gap:8px;width:70%;margin:0 0 6px}
+.bk-dv::before,.bk-dv::after{content:"";flex:1;height:1.5px;background:linear-gradient(90deg,transparent,#c9a56b)}.bk-dv::after{transform:scaleX(-1)}
+.bk-dv span{width:8px;height:8px;transform:rotate(45deg);background:#a3185f;box-shadow:0 0 0 1.5px #c9a56b}
+.bk-wd p{margin:0;font:800 clamp(15px,2.3vw,25px)/1.45 'Noto Serif Tamil','Baloo Thambi 2',serif;color:#8f1456;text-shadow:0 1px 0 #fff}
+.bk-wd small{margin-top:6px;font:600 clamp(9px,1.1vw,11px) 'Cinzel',serif;letter-spacing:.28em;color:#8a6538}
+.bk-dots{display:flex;gap:9px;margin-top:22px;align-items:center;color:#8f1456;font-weight:700}
+.bk-dots i{width:10px;height:10px;border-radius:50%;background:#c9a56b;opacity:.45;transition:.3s;cursor:pointer}
+.bk-dots i.on{opacity:1;transform:scale(1.35);background:#a3185f}
+.bk-dots em{font-style:normal;margin-left:8px;font-size:14px}
+.bk-mc.bki{background:#fffdf8;box-shadow:0 8px 14px rgba(60,35,10,.35),0 0 0 2px rgba(214,184,120,.9)}
+.bk-mc.bki::after{display:none}
+.bk-mc.bki img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:inherit}
+.bk-mc.bki small{bottom:5px;left:50%;right:auto;transform:translateX(-50%);padding:1px 9px;border-radius:99px;background:rgba(143,20,86,.92);color:#fff4d2;white-space:nowrap}
+.bk-pl.nopv .bk-wd{flex:1;overflow-y:auto}
+ .bk-c{max-height:none;overflow:visible}
+.bk-wd{min-height:0;overflow:hidden}
+.bk-h{margin:0;font:800 clamp(17px,2.5vw,27px)/1.4 'Noto Serif Tamil','Baloo Thambi 2',serif;color:#8f1456;text-shadow:0 1px 0 #fff;overflow-wrap:anywhere}
+.bk-s{margin:4px 0 0;font:700 clamp(12px,1.6vw,17px)/1.45 'Mukta Malar','Baloo Thambi 2',sans-serif;color:#a3185f;overflow-wrap:anywhere}
+.bk-c{margin:8px 0 0;max-height:100%;overflow-y:auto;white-space:pre-line;font:500 clamp(11px,1.3vw,14px)/1.55 'Mukta Malar','Baloo Thambi 2',sans-serif;color:#4a2a1a;overflow-wrap:anywhere;scrollbar-width:thin}
+.bk-emp{display:flex;flex-direction:column;align-items:center;gap:8px;color:#8f1456}
+.bk-emp i{font-style:normal;font-size:clamp(28px,4vw,46px);color:#b98d3e}
+.bk-emp b{font:800 clamp(16px,2.2vw,24px)/1.35 'Noto Serif Tamil','Baloo Thambi 2',serif}
+/* மொபைல்: ஒரே பக்கம் — மேலே படம், கீழே வாசகம் */
+@media(max-width:760px){
+ .bk{padding:8px;background-position:62% center}
+ .bk-stage{gap:4px}
+ .bk-nv{width:40px;height:40px;font-size:22px;position:absolute;top:36%;z-index:6}
+ .bk-nv.prev{left:2px}.bk-nv.next{right:2px}
+ .bk-book{aspect-ratio:auto;flex-direction:column;width:min(80vw,420px);height:auto;perspective:none}
+ .bk-R{order:1;width:100%;height:min(54vh,100vw);border-radius:10px 10px 0 0;border:1.5px solid #d6b878;border-bottom:0;box-shadow:none}
+ .bk-L{order:2;width:100%;height:min(30vh,210px);border-radius:0 0 10px 10px;border:1.5px solid #d6b878;border-top:0;box-shadow:none}
+ .bk-spine,.bk-leaf{display:none!important}
+ .bk-pv{display:none}
+ .bk-wd{flex:1}
+ .bk-wd p{font-size:clamp(17px,5.2vw,24px)}
+ .bk-pl::before{inset:5px}
+ .bk-fade{animation:bkFd .45s ease both}
+ @keyframes bkFd{from{opacity:0;transform:translateX(var(--dx,24px))}to{opacity:1;transform:none}}
+}
+@media(prefers-reduced-motion:reduce){.bk.on{animation:none}.bk-fade{animation:none}}
